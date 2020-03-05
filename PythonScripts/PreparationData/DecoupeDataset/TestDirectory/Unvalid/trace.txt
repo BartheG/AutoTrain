@@ -1,0 +1,141 @@
+B-PSU-403 myftp
+
+Advanced tests
+
+  Change working directory:
+    Passed: 60.0 %
+    Crashed: 0.0 %
+  Deleting file:
+    Passed: 50.0 %
+    Crashed: 0.0 %
+  Directory Listing:
+    Passed: 0.0 %
+    Crashed: 0.0 %
+  Downloading file:
+    Passed: 0.0 %
+    Crashed: 0.0 %
+  Print working directory:
+    Passed: 100.0 %
+    Crashed: 0.0 %
+  Quit:
+    Passed: 0.0 %
+    Crashed: 0.0 %
+  Uploading file:
+    Passed: 0.0 %
+    Crashed: 0.0 %
+
+Basic tests
+
+  Authentication - 2 tests
+    Sending request before authentication: KO
+      Test failure: The output must match the regular expression 'OK
+$', but it was 'Sending [PWD^M$]
+No authentication test failed
+Expected reply-code: 530
+Received : [xxx^M$]
+KO
+'
+    Wrong user authentication: KO
+      Test failure: The output must match the regular expression 'OK
+$', but it was 'Sending [USER FBpdzgTT^M$]
+Wrong Authentication test failed
+Expected reply-code: 331
+Received : [xxx^M$]
+KO
+'
+  
+  Preliminaries - 3 tests
+    Simple authentication with USER + PASS command: OK
+      PASSED
+    several simultaneous connections: OK
+      PASSED
+    several successive connections: OK
+      PASSED
+  
+  Various tests - 4 tests
+    Help: KO
+      Test failure: The output must match the regular expression 'OK
+$', but it was 'Sending [USER Anonymous^M$]
+Reply-code OK
+Sending [PASS ^M$]
+Reply-code OK
+Sending [HELP^M$]
+Help command test failed
+Expected reply-code: 214
+Received : [230 User logged in, proceed.^M$]
+KO
+'
+    No operation: OK
+      PASSED
+    Only spaces: KO
+      Test failure: The output must match the regular expression 'OK
+$', but it was 'Sending [USER Anonymous^M$]
+Reply-code OK
+Sending [PASS ^M$]
+Reply-code OK
+Sending [    ^M$]
+Only space command test failed
+Expected reply-code: 500
+Received : [xxx^M$]
+KO
+'
+    Wrong command: KO
+      Test failure: The output must match the regular expression 'OK
+$', but it was 'Sending [USER Anonymous^M$]
+Reply-code OK
+Sending [PASS ^M$]
+Reply-code OK
+Sending [WAWUCXOO^M$]
+Wrong command test failed
+Expected reply-code: 500
+Received : [xxx^M$]
+KO
+'
+  
+
+
+=== BUILD LOG ===
+
+make: Entering directory '/usr/local/bugs/delivery'
+rm -f ./server_srcs/socket.o ./server_srcs/create_socket.o ./server_srcs/struct.o ./server_srcs/connection_loop.o ./server_srcs/get_next_line.o ./server_srcs/data_socket.o ./server_srcs/get_user_co.o ./server_srcs/manipulation_fct.o ./server_srcs/display_cmd.o ./server_srcs/get_command.o ./server_srcs/send_file.o ./server_srcs/filezilla_cmd.o ./client_srcs/socket_client.o ./client_srcs/create_socket_client.o ./client_srcs/struct.o ./client_srcs/get_input.o ./client_srcs/get_next_line.o
+rm -f myftp server
+gcc -W -Wextra -Wall -I./include/   -c -o server_srcs/socket.o server_srcs/socket.c
+gcc -W -Wextra -Wall -I./include/   -c -o server_srcs/create_socket.o server_srcs/create_socket.c
+gcc -W -Wextra -Wall -I./include/   -c -o server_srcs/struct.o server_srcs/struct.c
+gcc -W -Wextra -Wall -I./include/   -c -o server_srcs/connection_loop.o server_srcs/connection_loop.c
+gcc -W -Wextra -Wall -I./include/   -c -o server_srcs/get_next_line.o server_srcs/get_next_line.c
+gcc -W -Wextra -Wall -I./include/   -c -o server_srcs/data_socket.o server_srcs/data_socket.c
+gcc -W -Wextra -Wall -I./include/   -c -o server_srcs/get_user_co.o server_srcs/get_user_co.c
+gcc -W -Wextra -Wall -I./include/   -c -o server_srcs/manipulation_fct.o server_srcs/manipulation_fct.c
+gcc -W -Wextra -Wall -I./include/   -c -o server_srcs/display_cmd.o server_srcs/display_cmd.c
+gcc -W -Wextra -Wall -I./include/   -c -o server_srcs/get_command.o server_srcs/get_command.c
+gcc -W -Wextra -Wall -I./include/   -c -o server_srcs/send_file.o server_srcs/send_file.c
+gcc -W -Wextra -Wall -I./include/   -c -o server_srcs/filezilla_cmd.o server_srcs/filezilla_cmd.c
+gcc -W -Wextra -Wall -I./include/ ./server_srcs/socket.o ./server_srcs/create_socket.o ./server_srcs/struct.o ./server_srcs/connection_loop.o ./server_srcs/get_next_line.o ./server_srcs/data_socket.o ./server_srcs/get_user_co.o ./server_srcs/manipulation_fct.o ./server_srcs/display_cmd.o ./server_srcs/get_command.o ./server_srcs/send_file.o ./server_srcs/filezilla_cmd.o -o server
+gcc -W -Wextra -Wall -I./include/   -c -o client_srcs/socket_client.o client_srcs/socket_client.c
+gcc -W -Wextra -Wall -I./include/   -c -o client_srcs/create_socket_client.o client_srcs/create_socket_client.c
+gcc -W -Wextra -Wall -I./include/   -c -o client_srcs/struct.o client_srcs/struct.c
+gcc -W -Wextra -Wall -I./include/   -c -o client_srcs/get_input.o client_srcs/get_input.c
+gcc -W -Wextra -Wall -I./include/   -c -o client_srcs/get_next_line.o client_srcs/get_next_line.c
+gcc -W -Wextra -Wall -I./include/ ./client_srcs/socket_client.o ./client_srcs/create_socket_client.o ./client_srcs/struct.o ./client_srcs/get_input.o ./client_srcs/get_next_line.o -o myftp
+make: Leaving directory '/usr/local/bugs/delivery'
+Build status: OK
+
+
+=== CODING STYLE ===
+
+L4 rule has been violated 1 times: curly brackets misplaced
+C1 rule has been violated 1 times: nested conditonal branchings with a depth of 3 or more should be avoided and an if block should not contain more than 3 branchings
+
+
+------------------------------------------------------------------------------
+                           GCC Code Coverage Report
+Directory: /tmp/tmp_delivery
+------------------------------------------------------------------------------
+File                                       Lines    Exec  Cover   Missing
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+TOTAL                                          0       0    --%
+------------------------------------------------------------------------------
+lines: 0.0% (0 out of 0)
+branches: 0.0% (0 out of 0)

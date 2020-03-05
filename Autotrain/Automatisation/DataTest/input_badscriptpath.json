@@ -1,0 +1,90 @@
+{
+	"name":"delivery_",
+	"version":1.0,
+	"step1":{
+		"module":false,
+		"app_path":"../ResizeAndCheck/main_notexists.py",
+		"args":{
+			"-p":"../../TestData/",
+			"--output":"./BaseResizedData",
+			"--new_x":300,
+			"--new_y":300,
+			"--save_box_images":1
+		}
+	},
+	"step2":{
+		"module":true,
+		"import_path":"../ResizeAndCheck",
+		"module_name":"check_img",
+		"class_name":"CheckImg",
+		"args":[ "./BaseResizedData","./BaseResizedData" ]
+	},
+	"step3":{
+		"module":true,
+		"import_path":"../ScriptsIAHelios/InitialisationIA/ParseLabels",
+		"module_name":"parse",
+		"class_name":"ParseXml",
+		"args":[ "./BaseResizedData/" ]
+	},
+	"step4":{
+		"module":false,
+		"app_path":"../EditTfRecord/edit_tfrecord.py",
+		"args":{
+			"../../ScriptsIAHelios/InitialisationIA/GenTfRecord/generate_tfrecord.py":"./labelmap.pbtxt"
+		}
+	},
+	"step5":{
+		"module":true,
+		"import_path":"../ScriptsIAHelios/PreparationData/DecoupeDataset",
+		"module_name":"cut",
+		"class_name":"OrganizeData",
+		"args":[ "./BaseResizedData" ]
+	},
+	"step6":{
+		"module":true,
+		"import_path":"../ScriptsIAHelios/InitialisationIA/XmlToCsv",
+		"module_name":"xmltocsv",
+		"class_name":"ReadAndConvert",
+		"args":[ "./train/labels" ],
+		"command":{
+			"rename":[ "labeldata.csv", "train_labels.csv" ]
+		}
+	},
+	"step7":{
+		"module":true,
+		"import_path":"../ScriptsIAHelios/InitialisationIA/XmlToCsv",
+		"module_name":"xmltocsv",
+		"class_name":"ReadAndConvert",
+		"args":[ "./test/labels" ],
+		"command":{
+			"rename":[ "labeldata.csv", "test_labels.csv" ]
+		}
+	},
+	"step8":{
+		"module":false,
+		"app_path":"../ScriptsIAHelios/InitialisationIA/GenTfRecord/generate_tfrecord.py",
+		"args":{
+			"--csv_input":"train_labels.csv",
+			"--output_path":"train.record",
+			"--image_dir":"./train/data"
+		}
+	},
+	"step9":{
+		"module":false,
+		"app_path":"../ScriptsIAHelios/InitialisationIA/GenTfRecord/generate_tfrecord.py",
+		"args":{
+			"--csv_input":"test_labels.csv",
+			"--output_path":"test.record",
+			"--image_dir":"./test/data"
+		}
+	},
+	"step10":{
+		"module":false,
+		"app_path":"../models/research/object_detection/model_main.py",
+		"args":{
+			"--logdir":"./export/",
+			"--train_dir":"./",
+			"--pipeline_config_path":"../../PreModels/Faster/pipeline.config"
+		}
+	}
+}

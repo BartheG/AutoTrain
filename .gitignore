@@ -1,0 +1,10 @@
+**/__pycache__
+**/testvenv
+**/.DS_Store
+.DS_Store
+Autotrain/TestData
+Autotrain/PreModels
+Autotrain/ResizeAndCheck
+PythonScripts/travis.yml
+PythonScripts/PreparationData/VideoToFrame/TestDirectory
+PythonScripts/CopyData
