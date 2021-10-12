@@ -1,5 +1,5 @@
 opencv-contrib-python==4.1.1.26
-opencv-python==3.4.3.18
+opencv-python==3.4.7.28
 tensorboard==1.14.0
 tensorflow==1.15.2
 tensorflow-estimator==1.14.0
